@@ -1,7 +1,7 @@
 <main>
   <nav class="navbar">
     <button class="brand" (click)="scrollTo('home')" aria-label="Home">
-      <span class="brand-mark">◆</span>
+      <span class="brand-mark">●</span>
       <span>GreenVolt</span>
     </button>
 
@@ -19,6 +19,7 @@
     </div>
   </nav>
 
+  <!-- HERO -->
   <section id="home" class="hero section">
     <div class="hero-image">
       <div class="hero-overlay"></div>
@@ -28,14 +29,18 @@
         <p class="hero-copy">Smart renewable-energy solutions for a more sustainable world.</p>
         <button class="pill light-pill" (click)="scrollTo('solutions')">Explore solutions <span>→</span></button>
       </div>
+
+      <!-- STATS DINÁMICOS -->
       <div class="hero-stats">
-        <div><strong>6 mil</strong><span>customers worldwide</span></div>
-        <div><strong>315</strong><span>projects delivered</span></div>
-        <div><strong>120K</strong><span>tons CO₂ reduced</span></div>
+        <div *ngFor="let stat of stats">
+          <strong>{{ stat.value }}</strong>
+          <span>{{ stat.label }}</span>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- ABOUT -->
   <section id="about" class="intro section">
     <div class="intro-title">
       <p class="eyebrow">About us</p>
@@ -44,7 +49,7 @@
     <p class="intro-text">We provide high-quality renewable-energy solutions, combining practical engineering with reliable service and sustainable technology.</p>
 
     <div class="logos">
-      <div class="logo-circle active">☘</div>
+      <div class="logo-circle active">★</div>
       <div class="logo-circle">SolarGrid</div>
       <div class="logo-circle">Bunson</div>
       <div class="logo-circle">EcoPower</div>
@@ -52,6 +57,7 @@
     </div>
   </section>
 
+  <!-- FEATURES DINÁMICOS -->
   <section id="features" class="quality section">
     <div class="center-heading">
       <p class="eyebrow">Why choose us</p>
@@ -60,14 +66,15 @@
 
     <div class="feature-grid">
       <article class="feature-card" *ngFor="let feature of features">
-        <div class="feature-icon">✦</div>
+        <div class="feature-icon">{{ feature.icon }}</div>
         <h3>{{ feature.title }}</h3>
-        <p>{{ feature.text }}</p>
+        <p>{{ feature.description }}</p>
         <a href="#contact" (click)="scrollTo('contact'); $event.preventDefault()">Learn more →</a>
       </article>
     </div>
   </section>
 
+  <!-- SOLUTIONS -->
   <section id="solutions" class="trusted section">
     <div class="trusted-copy">
       <p class="eyebrow">Our services</p>
@@ -87,6 +94,7 @@
     </div>
   </section>
 
+  <!-- PROBLEMS -->
   <section class="problems section">
     <div class="center-heading">
       <p class="eyebrow">Our approach</p>
@@ -104,19 +112,55 @@
     </div>
   </section>
 
-  <footer id="contact" class="footer section">
+  <!-- TESTIMONIOS DINÁMICOS -->
+  <section class="testimonials section">
+    <div class="center-heading">
+      <p class="eyebrow">What our clients say</p>
+      <h2>Trusted by companies<br>around the world</h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card" *ngFor="let t of testimonials">
+        <p class="testimonial-comment">"{{ t.comment }}"</p>
+        <div class="testimonial-author">
+          <strong>{{ t.name }}</strong>
+          <span>{{ t.role }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contact" class="contact-section section">
+    <div class="center-heading">
+      <p class="eyebrow">Get in touch</p>
+      <h2>Send us a message</h2>
+    </div>
+
+    <form class="contact-form" (ngSubmit)="sendContact()">
+      <input type="text" placeholder="Your name" [(ngModel)]="contact.name" name="name" required />
+      <input type="email" placeholder="Your email" [(ngModel)]="contact.email" name="email" required />
+      <textarea placeholder="Your message" [(ngModel)]="contact.message" name="message" rows="5" required></textarea>
+      <button type="submit" class="pill green-pill">Send message →</button>
+    </form>
+
+    <p class="contact-success" *ngIf="contactSent">✅ Message sent successfully!</p>
+    <p class="contact-error" *ngIf="contactError">❌ Error sending message. Please try again.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer section">
     <div>
       <p class="eyebrow light">Ready for the next step?</p>
       <h2>It's time to support zero pollution,<br>with renewable resources.</h2>
       <div class="footer-bullets">
-        <span>● Renewable energy</span>
-        <span>● Smart technology</span>
-        <span>● Reliable service</span>
+        <span>✔ Renewable energy</span>
+        <span>✔ Smart technology</span>
+        <span>✔ Reliable service</span>
       </div>
     </div>
     <div class="footer-action">
       <p>Talk to our team about a solution<br>designed for your project.</p>
-      <button class="pill light-pill">Get in touch <span>→</span></button>
+      <button class="pill light-pill" (click)="scrollTo('contact')">Get in touch →</button>
     </div>
 
     <div class="footer-bottom">
